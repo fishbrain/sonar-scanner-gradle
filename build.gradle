@@ -43,12 +43,15 @@ repositories {
   maven {
     url "https://repox.sonarsource.com/sonarsource"
   }
+  maven {
+    url "https://maven.google.com"
+  }
 }
 
 dependencies {
   compile gradleApi()
   compile 'org.sonarsource.scanner.api:sonar-scanner-api:2.9.0.887'
-  compileOnly 'com.android.tools.build:gradle:2.3.1'
+  compileOnly 'com.android.tools.build:gradle:3.0.0-beta6'
   testCompile localGroovy()
   testCompile 'junit:junit:4.12'
   testCompile 'org.hamcrest:hamcrest-all:1.3'

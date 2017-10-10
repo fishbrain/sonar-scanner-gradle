@@ -31,6 +31,15 @@ import com.android.build.gradle.api.TestVariant;
 import com.android.build.gradle.api.UnitTestVariant;
 import com.android.build.gradle.internal.api.TestedVariant;
 import com.android.builder.model.SourceProvider;
+
+import org.gradle.api.Nullable;
+import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.PluginCollection;
+import org.gradle.api.tasks.compile.AbstractCompile;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -39,13 +48,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.gradle.api.Nullable;
-import org.gradle.api.Project;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
-import org.gradle.api.plugins.PluginCollection;
-import org.gradle.api.tasks.compile.AbstractCompile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Only access this class when running on an Android application
@@ -211,7 +213,7 @@ class AndroidUtils {
     // I don't know what is best: ApkVariant::getCompileLibraries() or BaseVariant::getJavaCompile()::getClasspath()
     // In doubt I put both in a set to remove duplicates
     if (variant instanceof ApkVariant) {
-      libraries.addAll(((ApkVariant) variant).getCompileLibraries());
+      libraries.addAll(((ApkVariant) variant).getCompileClasspath(null).getFiles());
     }
     if (javaCompiler != null) {
       libraries.addAll(javaCompiler.getClasspath().filter(File::exists).getFiles());
